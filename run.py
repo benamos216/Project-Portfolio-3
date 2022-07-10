@@ -2,6 +2,7 @@
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
 from random import randint
+from random import random
 
 #Board for holding ship locations
 HIDDEN_BOARD = [[" "] * 8 for x in range(8)]
@@ -50,6 +51,9 @@ def get_ship_location():
     return int(row) - 1, letters_to_numbers[column]
 
 def computer_turn():
+    row = randint(1,8)
+    column = randint(1,8)
+    return int(row) - 1, int(column) - 1
 
 
 #check if all ships are hit
@@ -64,27 +68,47 @@ def count_hit_ships(board):
 def play_game():
     create_ships(HIDDEN_BOARD)
     create_ships(COMPUTER_BOARD)
-    print('Guess a battleship location\n')
-    print('Player Board\n')
-    print_board(GUESS_BOARD)
-    print('\nComputer Board\n')
-    print_board(COMPUTER_PLAY_BOARD)
-    while count_hit_ships(GUESS_BOARD) < 6, count_hit_ships(COMPUTER_PLAY_BOARD) < 6:
+    while count_hit_ships(GUESS_BOARD) < 6:
+        print('Guess a battleship location\n')
+        print('Player Board\n')
         print_board(GUESS_BOARD)
-        print_board(COMPUTER_PLAY_BOARD)
         row, column = get_ship_location()
-        row, column = computer_turn()
         if GUESS_BOARD[row][column] == "-":
             print("You guessed that one already.")
         elif HIDDEN_BOARD[row][column] == "X":
-            print("Hit")
-            GUESS_BOARD[row][column] = "X" 
+            print("Hit\n")
+            GUESS_BOARD[row][column] = "X"
+            print("Player Board\n")
+            print_board(GUESS_BOARD)
         else:
-            print("MISS!")
-            GUESS_BOARD[row][column] = "-"      
+            print("MISS!\n")
+            GUESS_BOARD[row][column] = "-"
+            print("Player Board\n")
+            print_board(GUESS_BOARD)
         if count_hit_ships(GUESS_BOARD) == 5:
             print("You win!")
             GUESS_BOARD[row][column] = "X"
+            exit()
+        while count_hit_ships(COMPUTER_PLAY_BOARD) < 6:
+            print('\nComputer Board\n')
+            print_board(COMPUTER_PLAY_BOARD)
+            row, column = computer_turn()
+            if COMPUTER_PLAY_BOARD[row][column] == "-":
+                print("You guessed that one already.")
+            elif COMPUTER_BOARD[row][column] == "X":
+                print("Hit\n")
+                COMPUTER_PLAY_BOARD[row][column] = "X"
+                print("Computer Board\n")
+                print_board(COMPUTER_PLAY_BOARD)
+            else:
+                print("MISS!\n")
+                COMPUTER_PLAY_BOARD[row][column] = "-"
+                print("Computer Board\n")
+                print_board(COMPUTER_PLAY_BOARD)
+            if count_hit_ships(COMPUTER_PLAY_BOARD) == 5:
+                print("You Lose!")
+                COMPUTER_PLAY_BOARD[row][column] = "X"
+                exit()
             break
             
 
