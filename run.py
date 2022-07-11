@@ -87,16 +87,31 @@ def count_hit_ships(board):
     return count
 
 
-def play_game():
+def ship_board():
+    """
+    Generates boards with random location for the ships.
+    Not visible by the user.
+    """
     create_ships(HIDDEN_BOARD)
     create_ships(COMPUTER_BOARD)
+
+
+def guesses():
+    """
+    Checks players inputs for guesses are valid for both row and column.
+    If valid, will check it has not already been guessed. If a valid guess,
+    will then check if coordinate is a ship on the Hidden Boards and will
+    return a hit or a miss. Also randomly generates computer guesses,
+    marking a hit or miss also.
+    """
     while count_hit_ships(GUESS_BOARD) < 6:
-        print('Guess a battleship location\n')
+        print('\nGuess a battleship location\n')
         print('Player Board\n')
         print_board(GUESS_BOARD)
         row, column = get_ship_location()
         if GUESS_BOARD[row][column] == "-":
             print("You guessed that one already.")
+            guesses()
         elif HIDDEN_BOARD[row][column] == "X":
             print("Hit\n")
             GUESS_BOARD[row][column] = "X"
@@ -110,7 +125,7 @@ def play_game():
         if count_hit_ships(GUESS_BOARD) == 5:
             print("You win!")
             GUESS_BOARD[row][column] = "X"
-            exit()
+            start_game()
         while count_hit_ships(COMPUTER_PLAY_BOARD) < 6:
             print('\nComputer Board\n')
             print_board(COMPUTER_PLAY_BOARD)
@@ -130,7 +145,48 @@ def play_game():
             if count_hit_ships(COMPUTER_PLAY_BOARD) == 5:
                 print("You Lose!")
                 COMPUTER_PLAY_BOARD[row][column] = "X"
-                exit()
+                start_game()
             break
 
-play_game()
+
+def welcome():
+    """
+    Welcome message on startup, informing user of how the game is played.
+    """
+    print("Welcome to Battleships!\n")
+    print("A turn based game, where each player tries to guess")
+    print("where their opponents ships have been placed on their grid!")
+    print("Each guess is made by selecting a row")
+    print("and then a column from the grid.")
+    print("If the player guesses correctly, the opponents board will mark an")
+    print("X, otherwise a miss will be marked with a ~.")
+    print("The winner is the first one to sink all their opponents")
+    print("ships before theirs have been sunk!\n")
+
+
+def start_game():
+    """
+    Allows the user to decide whether or not to start a game, also loops back
+    to once a game has finished, so the player can play another game.
+    """
+    print("Would you like to play a game? Y/N\n")
+    x = input()
+    if x == 'Y':
+        ship_board()
+    elif x == 'N':
+        exit()
+    else:
+        print("Incorrect option selected, please try again\n")
+        start_game()
+
+
+def main():
+    """
+    Main function to run program.
+    """
+    welcome()
+    start_game()
+    guesses()
+
+
+main()
