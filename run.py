@@ -4,14 +4,15 @@
 from random import randint
 from random import random
 
-#Player Board for holding ship locations
+# Player Board for holding ship locations
 HIDDEN_BOARD = [[" "] * 8 for x in range(8)]
-#Player Board for displaying hits and misses
+# Player Board for displaying hits and misses
 GUESS_BOARD = [[" "] * 8 for i in range(8)]
-#Computer Board for holding ship locations
+# Computer Board for holding ship locations
 COMPUTER_BOARD = [[" "] * 8 for x in range(8)]
-#Computer Board for displaying hits and misses
+# Computer Board for displaying hits and misses
 COMPUTER_PLAY_BOARD = [[" "] * 8 for i in range(8)]
+
 
 def print_board(board):
     """
@@ -36,15 +37,17 @@ letters_to_numbers = {
     'H': 7
 }
 
+
 def create_ships(board):
     """
     Randomly generates 5 ships on both players boards
     """
     for ship in range(5):
-        ship_row, ship_column = randint(0,7), randint(0,7)
+        ship_row, ship_column = randint(0, 7), randint(0, 7)
         while board[ship_row][ship_column] == "X":
             ship_row, ship_column = get_ship_location()
         board[ship_row][ship_column] = "X"
+
 
 def get_ship_location():
     """
@@ -61,13 +64,14 @@ def get_ship_location():
         column = input("Enter the column of the ship: ").upper()
     return int(row) - 1, letters_to_numbers[column]
 
+
 def computer_turn():
     """
     Generates the computer's turn, by randomly picking a row
     and column value within the parameters of the grid.
     """
-    row = randint(1,8)
-    column = randint(1,8)
+    row = randint(1, 8)
+    column = randint(1, 8)
     return int(row) - 1, int(column) - 1
 
 
@@ -81,6 +85,7 @@ def count_hit_ships(board):
             if column == "X":
                 count += 1
     return count
+
 
 def play_game():
     create_ships(HIDDEN_BOARD)
@@ -127,6 +132,5 @@ def play_game():
                 COMPUTER_PLAY_BOARD[row][column] = "X"
                 exit()
             break
-            
 
 play_game()
