@@ -1,8 +1,7 @@
 # Your code goes here.
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
-from random import randint
-from random import random
+from random import randint, random
 
 # Player Board for holding ship locations
 HIDDEN_BOARD = [[" "] * 8 for x in range(8)]
@@ -25,6 +24,7 @@ def print_board(board):
     for row in board:
         print("%d|%s|" % (row_number, "|".join(row)))
         row_number += 1
+
 
 letters_to_numbers = {
     'A': 0,
@@ -113,32 +113,26 @@ def guesses():
             print("You guessed that one already.")
             guesses()
         elif HIDDEN_BOARD[row][column] == "X":
-            print("Hit\n")
+            print("\nPLAYER HIT!\n")
             GUESS_BOARD[row][column] = "X"
-            print("Player Board\n")
-            print_board(GUESS_BOARD)
         else:
-            print("MISS!\n")
+            print("\nPLAYER MISSED!\n")
             GUESS_BOARD[row][column] = "-"
-            print("Player Board\n")
-            print_board(GUESS_BOARD)
         if count_hit_ships(GUESS_BOARD) == 5:
             print("You win!")
             GUESS_BOARD[row][column] = "X"
             start_game()
         while count_hit_ships(COMPUTER_PLAY_BOARD) < 6:
-            print('\nComputer Board\n')
-            print_board(COMPUTER_PLAY_BOARD)
             row, column = computer_turn()
             if COMPUTER_PLAY_BOARD[row][column] == "-":
                 print("You guessed that one already.")
             elif COMPUTER_BOARD[row][column] == "X":
-                print("Hit\n")
+                print("COMPUTER HIT!\n")
                 COMPUTER_PLAY_BOARD[row][column] = "X"
                 print("Computer Board\n")
                 print_board(COMPUTER_PLAY_BOARD)
             else:
-                print("MISS!\n")
+                print("COMPUTER MISSED!\n")
                 COMPUTER_PLAY_BOARD[row][column] = "-"
                 print("Computer Board\n")
                 print_board(COMPUTER_PLAY_BOARD)
