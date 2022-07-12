@@ -95,51 +95,64 @@ def ship_board():
     create_ships(HIDDEN_BOARD)
     create_ships(COMPUTER_BOARD)
 
+def player_guess():
+    row, column = get_ship_location()
+    if GUESS_BOARD[row][column] == "-":
+        print("You guessed that one already.")
+        player_guess()
+    elif HIDDEN_BOARD[row][column] == "X":
+        print("\nPLAYER HIT!\n")
+        GUESS_BOARD[row][column] = "X"
+    else:
+        print("\nPLAYER MISSED!\n")
+        GUESS_BOARD[row][column] = "-"
+    if count_hit_ships(GUESS_BOARD) == 5:
+        print("You win!")
+        GUESS_BOARD[row][column] = "X"
+        start_game()
+
+
+def com_guess():
+    """
+    Computer's turn that is randomly generated. Checks to ensure that it is
+    not a selection that has already been made, if so retakes the computer's
+    turn. Once a selection has been made that is valid, will check if it has
+    hit a ship or not and return the appropriate mark on the board.
+    """
+    row, column = computer_turn()
+    if COMPUTER_PLAY_BOARD[row][column] == "-":
+        print("Computer has guessed that attack already. Try again!\n")
+        com_guess()
+    elif COMPUTER_BOARD[row][column] == "X":
+        print("COMPUTER HIT!\n")
+        COMPUTER_PLAY_BOARD[row][column] = "X"
+        print("Computer Board\n")
+        print_board(COMPUTER_PLAY_BOARD)
+    else:
+        print("COMPUTER MISSED!\n")
+        COMPUTER_PLAY_BOARD[row][column] = "-"
+        print("Computer Board\n")
+        print_board(COMPUTER_PLAY_BOARD)
+    if count_hit_ships(COMPUTER_PLAY_BOARD) == 5:
+        print("You Lose!")
+        COMPUTER_PLAY_BOARD[row][column] = "X"
+        start_game()
+
 
 def guesses():
     """
     Checks players inputs for guesses are valid for both row and column.
     If valid, will check it has not already been guessed. If a valid guess,
     will then check if coordinate is a ship on the Hidden Boards and will
-    return a hit or a miss. Also randomly generates computer guesses,
-    marking a hit or miss also.
+    return a hit or a miss.
     """
     while count_hit_ships(GUESS_BOARD) < 6:
         print('\nGuess a battleship location\n')
         print('Player Board\n')
         print_board(GUESS_BOARD)
-        row, column = get_ship_location()
-        if GUESS_BOARD[row][column] == "-":
-            print("You guessed that one already.")
-            guesses()
-        elif HIDDEN_BOARD[row][column] == "X":
-            print("\nPLAYER HIT!\n")
-            GUESS_BOARD[row][column] = "X"
-        else:
-            print("\nPLAYER MISSED!\n")
-            GUESS_BOARD[row][column] = "-"
-        if count_hit_ships(GUESS_BOARD) == 5:
-            print("You win!")
-            GUESS_BOARD[row][column] = "X"
-            start_game()
+        player_guess()
         while count_hit_ships(COMPUTER_PLAY_BOARD) < 6:
-            row, column = computer_turn()
-            if COMPUTER_PLAY_BOARD[row][column] == "-":
-                print("You guessed that one already.")
-            elif COMPUTER_BOARD[row][column] == "X":
-                print("COMPUTER HIT!\n")
-                COMPUTER_PLAY_BOARD[row][column] = "X"
-                print("Computer Board\n")
-                print_board(COMPUTER_PLAY_BOARD)
-            else:
-                print("COMPUTER MISSED!\n")
-                COMPUTER_PLAY_BOARD[row][column] = "-"
-                print("Computer Board\n")
-                print_board(COMPUTER_PLAY_BOARD)
-            if count_hit_ships(COMPUTER_PLAY_BOARD) == 5:
-                print("You Lose!")
-                COMPUTER_PLAY_BOARD[row][column] = "X"
-                start_game()
+            com_guess()
             break
 
 
