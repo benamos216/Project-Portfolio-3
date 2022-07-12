@@ -54,10 +54,10 @@ def get_ship_location():
     Player input for their guesses. Checks that each input is valid
     and informs the player if they are made an incorrect input.
     """
-    row = input("Enter the row of the ship: ").upper()
+    row = input("Enter the row of the ship: ")
     while row not in "12345678":
         print('Not an appropriate choice, please select a valid row')
-        row = input("Enter the row of the ship: ").upper()
+        row = input("Enter the row of the ship: ")
     column = input("Enter the column of the ship: ").upper()
     while column not in "ABCDEFGH":
         print('Not an appropriate choice, please select a valid column')
@@ -147,15 +147,19 @@ def welcome():
     """
     Welcome message on startup, informing user of how the game is played.
     """
+    print("*****************************************************************")
+    print("*                                                               *")
+    print("*                        BATTLESHIPS                            *")
+    print("*                                                               *")
+    print("*****************************************************************")
     print("Welcome to Battleships!\n")
-    print("A turn based game, where each player tries to guess")
-    print("where their opponents ships have been placed on their grid!")
-    print("Each guess is made by selecting a row")
-    print("and then a column from the grid.")
-    print("If the player guesses correctly, the opponents board will mark an")
-    print("X, otherwise a miss will be marked with a ~.")
-    print("The winner is the first one to sink all their opponents")
-    print("ships before theirs have been sunk!\n")
+    print("A turn based game, where each player tries to guess where")
+    print("their opponents ships have been placed on their grid!")
+    print("Each guess is made by selecting a row and then a column")
+    print("from the grid. If the player guesses correctly, the opponents")
+    print("board will mark an X, otherwise a miss will be marked with a ~.")
+    print("The winner is the first one to sink all their opponents ships")
+    print("before theirs have been sunk!\n")
 
 
 def start_game():
