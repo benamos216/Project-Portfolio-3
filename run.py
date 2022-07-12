@@ -181,7 +181,7 @@ def start_game():
     to once a game has finished, so the player can play another game.
     """
     print("Would you like to play a game? Y/N\n")
-    x = input()
+    x = input().upper()
     if x == 'Y':
         ship_board()
     elif x == 'N':
