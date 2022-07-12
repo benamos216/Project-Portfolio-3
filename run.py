@@ -95,6 +95,7 @@ def ship_board():
     create_ships(HIDDEN_BOARD)
     create_ships(COMPUTER_BOARD)
 
+
 def player_guess():
     row, column = get_ship_location()
     if GUESS_BOARD[row][column] == "-":
