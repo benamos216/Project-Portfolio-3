@@ -19,7 +19,6 @@ def print_board(board):
     A - H letters used for the columns, 1 - 8 used for the rows
     """
     print("  A B C D E F G H")
-    print("  +-+-+-+-+-+-+-+")
     row_number = 1
     for row in board:
         print("%d|%s|" % (row_number, "|".join(row)))
