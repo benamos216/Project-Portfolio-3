@@ -97,6 +97,13 @@ def ship_board():
 
 
 def player_guess():
+    """
+    Checks if the players guess has already been guessed. If so returns message
+    to the player letting them know, and makes them guess again. If a valid
+    guess, then checks to see if they have selected a grid location with a
+    ship, and returns the correct output. Also checks if all the computer
+    ships have been hit, and if so lets the player know they have won.
+    """
     row, column = get_ship_location()
     if GUESS_BOARD[row][column] == "-":
         print("You guessed that one already.")
@@ -182,10 +189,10 @@ def start_game():
     to once a game has finished, so the player can play another game.
     """
     print("Would you like to play a game? Y/N\n")
-    x = input().upper()
-    if x == 'Y':
+    play = input().upper()
+    if play == 'Y':
         ship_board()
-    elif x == 'N':
+    elif play == 'N':
         exit()
     else:
         print("Incorrect option selected, please try again\n")
